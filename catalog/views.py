@@ -2,6 +2,8 @@ from django.http import HttpResponse
 from django.shortcuts import render
 
 # Create your views here.
+from django.views.generic import ListView, DetailView
+
 from catalog.models import Book, BookInstance, Author
 
 
@@ -23,4 +25,18 @@ def index(request):
         'num_authors': num_authors,
     }
 
-    return HttpResponse('Homepage')
+    return render(request, 'index.html', context=context)
+
+
+class BookListView(ListView):
+    model = Book
+    template_name = 'book_list.html'
+    paginate_by = 10
+
+class BookDetailView(DetailView):
+    model = Book
+    template_name = 'book_detail.html'
+
+
+
+
